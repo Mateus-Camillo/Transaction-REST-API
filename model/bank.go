@@ -9,7 +9,16 @@ type Account struct {
 }
 
 type Transfer struct {
-	FromAccountID int     `json:"from_account_id"` // ID da conta de origem
-	ToAccountID   int     `json:"to_account_id"`   // ID da conta de destino
+	FromAccountID int     `json:"from_account_id"` 
+	ToAccountID   int     `json:"to_account_id"`   
 	Amount        float64 `json:"amount"`
+}
+
+type TransferResponse struct {
+	Account string 
+	Amount float64
+}
+
+type Response struct {
+	Message string 
 }

@@ -21,6 +21,10 @@ func main() {
 	AccountUseCase := usecase.NewAccountUseCase(AccountRepository)
 	AccountController := controller.NewAccountController(AccountUseCase)
 
+	TransferRepository := repository.NewTransferRepository(dbConnection)
+	TransferUseCase := usecase.NewTransferUseCase(TransferRepository)
+	TransferController := controller.NewAccountController(TransferUseCase)
+
 	server.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"message": "pong",
@@ -28,6 +32,8 @@ func main() {
 	})
 
 	server.POST("/account", AccountController.CreateAccount)
+
+	server.POST("/transfer", TransferController.TransferAmount)
 
 	server.Run(":8000")
 }

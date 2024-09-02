@@ -6,6 +6,7 @@ import (
 	"github.com/Mateus-Camillo/Transaction-REST-API/model"
 	"github.com/Mateus-Camillo/Transaction-REST-API/usecase"
 	"github.com/gin-gonic/gin"
+	"errors"
 )
 
 type accountController struct {
@@ -29,6 +30,14 @@ func (a *accountController) CreateAccount(ctx *gin.Context) {
 
 	createdAccount, err := a.accountUseCase.CreateAccount(account)
 	if err != nil {
+		if errors.Is(err, model.ErrInvalidPassword) {
+			response := model.Response{
+				Message: "Password must be, at least, 8 characters long"
+			}
+
+			ctx.JSON(http.StatusBadRequest, response)
+			return
+		}
 		ctx.JSON(http.StatusBadRequest, err)
 		return
 	}

@@ -3,7 +3,6 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-
 	"github.com/Mateus-Camillo/Transaction-REST-API/model"
 )
 
@@ -25,16 +24,25 @@ func (ar *TransferRepository) TransferBalance(transfer model.Transfer) error {
 	}
 
 	senderQuery := "UPDATE bank SET balance = balance - $1 WHERE username = $2"
-	_, err = tx.Exec(debitQuery, transfer.Amount, transfer.Amount)
+	_, err = tx.Exec(senderQuery, transfer.Amount, transfer.Amount)
 	if err != nil {
 		tx.Rollback()
+		fmt.Println(err)
 		return err
 	}
 
 	receiverQuery, err := ar.connection.Prepare("UPDATE bank SET balance = balance + $1 WHERE username = $2")
+	_, err = tx.Exec(receiverQuery, transfer.Amount, transfer.Amount)
 	if err != nil {
 		tx.Rollback()
+		fmt.Println(err)
 		return err
 	}
 
+	if err = tx.Commit(); err != nil {
+        fmt.Println(err)
+		return err
+    }
+	
+	return nil
 }
