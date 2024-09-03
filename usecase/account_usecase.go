@@ -3,7 +3,6 @@ package usecase
 import (
 	"github.com/Mateus-Camillo/Transaction-REST-API/model"
 	"github.com/Mateus-Camillo/Transaction-REST-API/repository"
-	"errors"
 )
 
 type AccountUseCase struct {
@@ -24,7 +23,7 @@ func (au *AccountUseCase) CreateAccount(account model.Account) (model.Account, e
 	}
 
 	if len(account.Credential) < 8 {
-		return model.Account{}, ErrInvalidPassword
+		return model.Account{}, model.ErrInvalidPassword
 	}
 
 	account.ID = accountId

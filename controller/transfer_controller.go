@@ -1,4 +1,4 @@
-package controller 
+package controller
 
 import (
 	"net/http"
@@ -7,6 +7,7 @@ import (
 
 	"github.com/Mateus-Camillo/Transaction-REST-API/model"
 	"github.com/Mateus-Camillo/Transaction-REST-API/usecase"
+	"github.com/gin-gonic/gin"
 )
 
 type transferController struct {
@@ -26,9 +27,9 @@ func (t *transferController) TransferAmount(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
 		return
-	} 
+	}
 
-	err := t.transferUseCase.TransferBalance(transfer)
+	err = t.transferUseCase.TransferBalance(transfer)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
@@ -37,7 +38,7 @@ func (t *transferController) TransferAmount(ctx *gin.Context) {
 	}
 
 	response := model.Response{
-		Message: "Money transfer done successfully"
+		Message: "Money transfer done successfully",
 	}
 
 	ctx.JSON(http.StatusOK, response)

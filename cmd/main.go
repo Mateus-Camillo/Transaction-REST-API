@@ -23,7 +23,7 @@ func main() {
 
 	TransferRepository := repository.NewTransferRepository(dbConnection)
 	TransferUseCase := usecase.NewTransferUseCase(TransferRepository)
-	TransferController := controller.NewAccountController(TransferUseCase)
+	TransferController := controller.NewTransferController(TransferUseCase)
 
 	server.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{

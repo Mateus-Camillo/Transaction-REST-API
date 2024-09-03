@@ -19,7 +19,7 @@ func (tu *TransferUseCase) TransferBalance(transfer model.Transfer) error {
 	err := tu.repository.TransferBalance(transfer)
 
 	if err != nil {
-		return model.Transfer{}, err
+		return err
 	}
 
 	return nil
