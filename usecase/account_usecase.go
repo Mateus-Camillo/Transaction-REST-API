@@ -16,14 +16,13 @@ func NewAccountUseCase(repo repository.AccountRepository) AccountUseCase {
 }
 
 func (au *AccountUseCase) CreateAccount(account model.Account) (model.Account, error) {
-	accountId, err := au.repository.CreateAccount(account)
-
-	if err != nil {
-		return model.Account{}, err
-	}
-
 	if len(account.Credential) < 8 {
 		return model.Account{}, model.ErrInvalidPassword
+	}
+
+	accountId, err := au.repository.CreateAccount(account)
+	if err != nil {
+		return model.Account{}, err
 	}
 
 	account.ID = accountId
